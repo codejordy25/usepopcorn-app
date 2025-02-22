@@ -10,10 +10,7 @@ const starContainerStyle = {
   display: "flex",
 };
 
-const textStyle = {
-  lineHeight: "1",
-  margin: 0,
-};
+//suppression de texte style puisqu'il va dépendre des props
 
 export default function StarRating({ maxRating = 5 }) {
   const [rating, setRating] = useState(0);
