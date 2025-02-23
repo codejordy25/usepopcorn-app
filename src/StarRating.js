@@ -10,10 +10,7 @@ const starContainerStyle = {
   display: "flex",
 };
 
-const textStyle = {
-  lineHeight: "1",
-  margin: 0,
-};
+
 
 export default function StarRating({
   maxRating = 5,
@@ -22,11 +19,17 @@ export default function StarRating({
 }) {
   const [rating, setRating] = useState(0);
   const [tempRating, setTempRating] = useState(0);
-
   //Cette fonction se charge de la mise à jour de la note(donc du composant)
   function handleRate(rating) {
     setRating(rating);
   }
+
+  const textStyle = {
+    lineHeight: "1",
+    margin: 0,
+    color,
+    fontSize:`${size /1.5}px`
+  };
 
   return (
     <div style={containerStyle}>
