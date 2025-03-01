@@ -14,24 +14,19 @@ export default function StarRating({
   maxRating = 5,
   color = "#fcc419",
   size = 48,
-  className = "",
-  messages = [],
-  defaultRating = 0,
-  onSetRating,
 }) {
-  const [rating, setRating] = useState(defaultRating);
+  const [rating, setRating] = useState(0);
   const [tempRating, setTempRating] = useState(0);
 
   function handleRating(rating) {
     setRating(rating);
-    onSetRating(rating);
   }
-
+  console.log("maxRating:", maxRating);
   const textStyle = {
     lineHeight: "1",
     margin: "0",
-    fontSize: `${size / 1.5}px`,
     color,
+    fontSize: `${size / 1.5}px`,
   };
   return (
     <div style={containerStyle}>
@@ -43,28 +38,24 @@ export default function StarRating({
             full={tempRating ? tempRating >= i + 1 : rating >= i + 1}
             onHoverIn={() => setTempRating(i + 1)}
             onHoverOut={() => setTempRating(0)}
-            color={color}
             size={size}
-            className={className}
+            color={color}
           />
         ))}
       </div>
-      <p style={textStyle}>
-        {messages.length === maxRating
-          ? messages[tempRating ? tempRating - 1 : rating - 1]
-          : tempRating || rating || ""}
-      </p>
+      <p style={textStyle}>{tempRating || rating || ""}</p>
     </div>
   );
 }
 
-function Star({ onRate, full, onHoverIn, onHoverOut, color, size, className }) {
+function Star({ onRate, full, onHoverIn, onHoverOut, color, size }) {
   const starStyle = {
-    width: `${size}px`,
-    heigth: `${size}px`,
-    cursor: "pointer",
+    width: `${size}`,
+    height: `${size}`,
     display: "block",
+    cursor: "pointer",
   };
+
   return (
     <span
       role="button"
@@ -72,7 +63,6 @@ function Star({ onRate, full, onHoverIn, onHoverOut, color, size, className }) {
       onClick={onRate}
       onMouseEnter={onHoverIn}
       onMouseLeave={onHoverOut}
-      className={className}
     >
       {full ? (
         <svg
