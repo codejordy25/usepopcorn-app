@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const tempMovieData = [
   {
@@ -50,18 +50,20 @@ const tempWatchedData = [
 const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
-const KEY = "416ec898";
+const KEY = "a2953e7c";
 export default function AppV1() {
   const [movies, setMovies] = useState(tempMovieData);
   const [watched, setWatched] = useState(tempWatchedData);
 
-  //This url is used to fetch data from the API: c'est avec elle que nous allons recuperer les données
-  fetch(`http://www.omdbapi.com/?apikey=${KEY}&s=interstellar`)
-    .then((res) => res.json())
-    .then((data) => console.log(data));
-  //fetch gère à l'intérieur les requetes http, json() permet de recuperer les données sous forme de json
-  //then accède à la récupère la réponse
-  //console.log(data) permet de voir les données recuperé: then((data=>)):acceder aux data
+  useEffect(function () {
+    //This url is used to fetch data from the API: c'est avec elle que nous allons recuperer les données
+    fetch(`http://www.omdbapi.com/?apikey=${KEY}&s=interstellar`)
+      .then((res) => res.json())
+      .then((data) => console.log(data.search));
+    //fetch gère à l'intérieur les requetes http, json() permet de recuperer les données sous forme de json
+    //then accède à la récupère la réponse
+    //console.log(data) permet de voir les données recuperé: then((data=>)):acceder aux data
+  }, []);
 
   return (
     <>
@@ -77,7 +79,7 @@ export default function AppV1() {
         <Box>
           <MoviesList movies={movies} />
         </Box>
-        {/* <Box element={<MoviesList movies={movies}/>}/> */}
+        {/* <Box element={<MoviesList movies={movies} />} /> */}
 
         {/* modif conf 👇🏽👇🏽 d'après conf 114 */}
         <Box>
@@ -86,11 +88,11 @@ export default function AppV1() {
         </Box>
 
         {/* <Box element={
-      <>
-      <WatchedSummary watched={watched} />
-      <WatchedList watched={watched} />
-      </>
-      }/> */}
+        <>
+        <WatchedSummary watched={watched} />
+        <WatchedList watched={watched} />
+        </>
+        }/> */}
       </Main>
     </>
   );
@@ -101,7 +103,7 @@ function NavBar({ children }) {
     <nav className="nav-bar">
       <Logo />
       {/* <SearchMovies />  props movies =>children  
-      <NumResults movies={movies} /> */}
+        <NumResults movies={movies} /> */}
       {children}
     </nav>
   );
@@ -186,28 +188,28 @@ function Movie({ movie }) {
 }
 
 /*
-function WatchedBox() {
-  const [watched, setWatched] = useState(tempWatchedData);
-  const [isOpen2, setIsOpen2] = useState(true);
-
-  return (
-    <div className="box">
-      <button
-        className="btn-toggle"
-        onClick={() => setIsOpen2((open) => !open)}
-      >
-        {isOpen2 ? "–" : "+"}
-      </button>
-      {isOpen2 && (
-        <>
-          <WatchedSummary watched={watched} />
-          <WatchedList watched={watched} />
-        </>
-      )}
-    </div>
-  );
-}
-  */
+  function WatchedBox() {
+    const [watched, setWatched] = useState(tempWatchedData);
+    const [isOpen2, setIsOpen2] = useState(true);
+  
+    return (
+      <div className="box">
+        <button
+          className="btn-toggle"
+          onClick={() => setIsOpen2((open) => !open)}
+        >
+          {isOpen2 ? "–" : "+"}
+        </button>
+        {isOpen2 && (
+          <>
+            <WatchedSummary watched={watched} />
+            <WatchedList watched={watched} />
+          </>
+        )}
+      </div>
+    );
+  }
+    */
 
 function WatchedSummary({ watched }) {
   const avgImdbRating = average(watched.map((movie) => movie.imdbRating));
