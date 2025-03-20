@@ -50,19 +50,26 @@ const tempWatchedData = [
 const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
-const KEY = "a2953e7c";
 export default function AppV1() {
   const [movies, setMovies] = useState(tempMovieData);
   const [watched, setWatched] = useState(tempWatchedData);
-
+  const query = "interstellar";
+  const KEY = "a2953e7c";
   useEffect(function () {
-    //This url is used to fetch data from the API: c'est avec elle que nous allons recuperer les données
-    fetch(`http://www.omdbapi.com/?apikey=${KEY}&s=interstellar`)
-      .then((res) => res.json())
-      .then((data) => console.log(data.search));
-    //fetch gère à l'intérieur les requetes http, json() permet de recuperer les données sous forme de json
-    //then accède à la récupère la réponse
-    //console.log(data) permet de voir les données recuperé: then((data=>)):acceder aux data
+    async function fetchMovies() {
+      //This url is used to fetch data from the API: c'est avec elle que nous allons recuperer les données
+      const res = await fetch(
+        `https://www.omdbapi.com/?apikey=${KEY}&s=${query}`
+      );
+      const data = await res.json();
+      // setMovies(data.Search);
+      console.log(data.Search);
+
+      //fetch gère à l'intérieur les requetes http, json() permet de recuperer les données sous forme de json
+      //then accède à la récupère la réponse
+      //console.log(data) permet de voir les données recuperé: then((data=>)):acceder aux data
+    }
+    fetchMovies();
   }, []);
 
   return (

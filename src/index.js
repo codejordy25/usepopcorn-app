@@ -23,7 +23,7 @@ root.render(
     <AppV1 />
     {/* <StarRating messages={["Terrible", "Bad", "Okay", "Good", "Amazing"]} />
     <StarRating size={24} color="red" className="test" defaultRating={2} />
-    <Test /> */}
+    <Test />*/}
   </React.StrictMode>
 );
 
