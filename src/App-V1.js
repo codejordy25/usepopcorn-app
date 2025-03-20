@@ -53,6 +53,8 @@ const average = (arr) =>
 export default function AppV1() {
   const [movies, setMovies] = useState(tempMovieData);
   const [watched, setWatched] = useState(tempWatchedData);
+  const [isLoading, setIsLoading] = useState(false);
+
   const query = "interstellar";
   const KEY = "a2953e7c";
   useEffect(function () {
@@ -64,6 +66,7 @@ export default function AppV1() {
       const data = await res.json();
       // setMovies(data.Search);
       console.log(data.Search);
+      setIsLoading(false);
 
       //fetch gère à l'intérieur les requetes http, json() permet de recuperer les données sous forme de json
       //then accède à la récupère la réponse
@@ -83,9 +86,7 @@ export default function AppV1() {
       {/* <Main movies={movies} /> */}
       <Main>
         {/* modif conf 👇🏽👇🏽 d'après conf 114 */}
-        <Box>
-          <MoviesList movies={movies} />
-        </Box>
+        <Box>{isLoading ? <Loader /> : <MoviesList movies={movies} />}</Box>
         {/* <Box element={<MoviesList movies={movies} />} /> */}
 
         {/* modif conf 👇🏽👇🏽 d'après conf 114 */}
@@ -103,6 +104,10 @@ export default function AppV1() {
       </Main>
     </>
   );
+}
+
+function Loader() {
+  return <p className="loader">loader...</p>;
 }
 
 function NavBar({ children }) {
